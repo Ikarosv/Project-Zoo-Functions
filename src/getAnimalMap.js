@@ -20,7 +20,7 @@ function switchOptions(animal, options = []) {
     info[animal.name] = filterSex(options.sex, animal, info[animal.name]);
   }
   if (options.sorted) {
-    info[animal.name] = info[animal.name].sort();
+    info[animal.name].sort();
   }
   return info;
 }
