@@ -36,6 +36,4 @@ function getSchedule(scheduleTarget) {
   return objFinal;
 }
 
-console.log(getSchedule('Monday'));
-
 module.exports = getSchedule;
