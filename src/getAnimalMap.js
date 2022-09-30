@@ -4,9 +4,9 @@ function animalNames(animals) {
   return animals.map(({ name }) => name);
 }
 
-function filterSex(sex, animal, residents) {
+function filterSex(sex, animals, residents) {
   return residents.filter((name, index) =>
-    name === animal.residents[index].name && animal.residents[index].sex === sex);
+    name === animals[index].name && animals[index].sex === sex);
 }
 
 function switchOptions(animal, options = []) {
@@ -17,7 +17,7 @@ function switchOptions(animal, options = []) {
     return animal.name;
   }
   if (options.sex && options.includeNames) {
-    info[animal.name] = filterSex(options.sex, animal, info[animal.name]);
+    info[animal.name] = filterSex(options.sex, animal.residents, info[animal.name]);
   }
   if (options.sorted) {
     info[animal.name].sort();
