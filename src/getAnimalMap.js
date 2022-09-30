@@ -6,40 +6,34 @@ function animalNames(animals) {
 
 function filterSex(sex, animals, residents) {
   return residents.filter((name, index) =>
-    name === animals[index].name && animals[index].sex === sex);
+    name === animals[index].name && sex === animals[index].sex);
 }
 
-function switchOptions(animal, options = []) {
+function switchOptions({ name, residents }, options) {
   const info = {};
   if (options.includeNames) {
-    info[animal.name] = animalNames(animal.residents);
+    info[name] = animalNames(residents);
   } else {
-    return animal.name;
+    return name;
   }
-  if (options.sex && options.includeNames) {
-    info[animal.name] = filterSex(options.sex, animal.residents, info[animal.name]);
+  if (options.sex) {
+    info[name] = filterSex(options.sex, residents, info[name]);
   }
   if (options.sorted) {
-    info[animal.name].sort();
+    info[name].sort();
   }
   return info;
 }
 
 function getAnimalMap(options) {
-  const loc = {
-    NE: [],
-    NW: [],
-    SE: [],
-    SW: [],
-  };
-  data.species.forEach((animal) => {
+  return data.species.reduce((loc, animal) => {
     if (options) {
       loc[animal.location].push(switchOptions(animal, options));
-      return;
+      return loc;
     }
     loc[animal.location].push(animal.name);
-  });
-  return loc;
+    return loc;
+  }, { NE: [], NW: [], SE: [], SW: [] });
 }
 
 module.exports = getAnimalMap;
